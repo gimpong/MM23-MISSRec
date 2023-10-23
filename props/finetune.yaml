@@ -1,0 +1,23 @@
+data_path: 'dataset/downstream/'
+benchmark_filename: [ train, valid, test ]
+alias_of_item_id: [ item_id_list ]
+load_col:
+  inter: [ user_id, item_id_list, item_id ]
+neg_sampling: ~
+transform: ~
+
+topk: [ 10, 50 ]
+metrics: [ HIT, NDCG ]
+valid_metric: NDCG@10
+train_stage: transductive_ft  # inductive_ft (w/o ID) / transductive_ft (default, w/ ID)
+eval_batch_size: 1024
+train_batch_size: 512
+stopping_step: 10
+
+gpu_id: '0'
+log_prefix: ''
+log_suffix: ''
+
+interest_ratio: 0.5
+# - for DPC-KNN only
+knn_local_ratio: 0.1

@@ -1,0 +1,19 @@
+data_path: 'dataset/pretrain/'
+benchmark_filename: [train]
+alias_of_item_id: [item_id_list]
+load_col:
+  inter: [user_id, item_id_list, item_id]
+neg_sampling: ~
+# transform: plm_img_emb
+transform: plm_img_interest_emb
+
+train_stage: pretrain
+pretrain_epochs: 100
+save_step: 10
+train_batch_size: 4096
+#train_batch_size: 8192
+ckpt_suffix: gamma1e-4
+
+interest_ratio: 0.02
+# - for DPC-KNN only
+knn_local_ratio: 0.1

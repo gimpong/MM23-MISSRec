@@ -1,0 +1,830 @@
+Fri 20 Oct 2023 03:43:56 INFO  Change train stage from 'transductive_ft' to 'inductive_ft'
+Fri 20 Oct 2023 03:43:56 INFO  
+General Hyper Parameters:
+gpu_id = 0
+use_gpu = True
+seed = 2020
+state = INFO
+reproducibility = True
+data_path = dataset/downstream/Instruments_mm_full
+checkpoint_dir = saved
+show_progress = True
+save_dataset = False
+dataset_save_path = None
+save_dataloaders = False
+dataloaders_save_path = None
+log_wandb = False
+
+Training Hyper Parameters:
+epochs = 300
+train_batch_size = 512
+learner = adam
+learning_rate = 0.001
+neg_sampling = None
+eval_step = 1
+stopping_step = 10
+clip_grad_norm = None
+weight_decay = 0.0
+loss_decimal_place = 4
+
+Evaluation Hyper Parameters:
+eval_args = {'split': {'LS': 'valid_and_test'}, 'order': 'TO', 'mode': 'full', 'group_by': 'user'}
+repeatable = True
+metrics = ['HIT', 'NDCG']
+topk = [10, 50]
+valid_metric = NDCG@10
+valid_metric_bigger = True
+eval_batch_size = 1024
+metric_decimal_place = 4
+
+Dataset Hyper Parameters:
+field_separator = 	
+seq_separator =  
+USER_ID_FIELD = user_id
+ITEM_ID_FIELD = item_id
+RATING_FIELD = rating
+TIME_FIELD = timestamp
+seq_len = None
+LABEL_FIELD = label
+threshold = None
+NEG_PREFIX = neg_
+load_col = {'inter': ['user_id', 'item_id_list', 'item_id']}
+unload_col = None
+unused_col = None
+additional_feat_suffix = None
+rm_dup_inter = None
+val_interval = None
+filter_inter_by_user_or_item = True
+user_inter_num_interval = [0,inf)
+item_inter_num_interval = [0,inf)
+alias_of_user_id = None
+alias_of_item_id = ['item_id_list']
+alias_of_entity_id = None
+alias_of_relation_id = None
+preload_weight = None
+normalize_field = None
+normalize_all = None
+ITEM_LIST_LENGTH_FIELD = item_length
+LIST_SUFFIX = _list
+MAX_ITEM_LIST_LENGTH = 50
+POSITION_FIELD = position_id
+HEAD_ENTITY_ID_FIELD = head_id
+TAIL_ENTITY_ID_FIELD = tail_id
+RELATION_ID_FIELD = relation_id
+ENTITY_ID_FIELD = entity_id
+benchmark_filename = ['train', 'valid', 'test']
+
+Other Hyper Parameters: 
+wandb_project = recbole
+require_pow = False
+MODEL_TYPE = ModelType.SEQUENTIAL
+n_layers = 2
+n_heads = 4
+hidden_size = 300
+inner_size = 256
+hidden_dropout_prob = 0.5
+attn_dropout_prob = 0.5
+hidden_act = gelu
+layer_norm_eps = 1e-12
+initializer_range = 0.02
+loss_type = CE
+item_drop_ratio = 0.2
+item_drop_coefficient = 0.9
+lambda = 0.001
+gamma = 0.0001
+plm_suffix = feat1CLS
+plm_suffix_aug = feat2CLS
+img_suffix = feat3CLS
+id_type = id
+modal_type = img_text
+plm_size = 512
+img_size = 512
+temperature = 0.07
+seq_mm_fusion = add
+item_mm_fusion = dynamic_shared
+transform = None
+train_stage = inductive_ft
+log_prefix = gpu2
+log_suffix = 
+interest_ratio = 0.5
+knn_local_ratio = 0.2
+MODEL_INPUT_TYPE = InputType.POINTWISE
+eval_type = EvaluatorType.RANKING
+device = cuda
+train_neg_sample_args = {'strategy': 'none'}
+eval_neg_sample_args = {'strategy': 'full', 'distribution': 'uniform'}
+
+
+Fri 20 Oct 2023 03:44:00 INFO  Instruments_mm_full
+The number of users: 24963
+Average actions of users: 7.369762038298213
+The number of items: 9965
+Average actions of items: 18.46286631874749
+The number of inters: 183964
+The sparsity of the dataset: 99.92604649462238%
+Remain Fields: ['user_id', 'item_id_list', 'item_id', 'item_length']
+Fri 20 Oct 2023 03:44:02 INFO  [Training]: train_batch_size = [512] negative sampling: [None]
+Fri 20 Oct 2023 03:44:02 INFO  [Evaluation]: eval_batch_size = [1024] eval_args: [{'split': {'LS': 'valid_and_test'}, 'order': 'TO', 'mode': 'full', 'group_by': 'user'}]
+Fri 20 Oct 2023 03:44:04 INFO  Loading from pretrained_models/MISSRec-FHCKM_mm_full-100-gamma1e-4.pth
+Fri 20 Oct 2023 03:44:04 INFO  Transfer [FHCKM_mm_full] -> [Instruments_mm_full
+The number of users: 24963
+Average actions of users: 7.369762038298213
+The number of items: 9965
+Average actions of items: 18.46286631874749
+The number of inters: 183964
+The sparsity of the dataset: 99.92604649462238%
+Remain Fields: ['user_id', 'item_id_list', 'item_id', 'item_length']]
+Fri 20 Oct 2023 03:44:04 INFO  Fix encoder parameters.
+Fri 20 Oct 2023 03:44:04 INFO  MISSRec(
+  (item_embedding): None
+  (position_embedding): Embedding(50, 300)
+  (trm_model): Transformer(
+    (encoder): TransformerEncoder(
+      (layers): ModuleList(
+        (0): TransformerEncoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=300, out_features=300, bias=True)
+          )
+          (linear1): Linear(in_features=300, out_features=256, bias=True)
+          (dropout): Dropout(p=0.5, inplace=False)
+          (linear2): Linear(in_features=256, out_features=300, bias=True)
+          (norm1): LayerNorm((300,), eps=1e-12, elementwise_affine=True)
+          (norm2): LayerNorm((300,), eps=1e-12, elementwise_affine=True)
+          (dropout1): Dropout(p=0.5, inplace=False)
+          (dropout2): Dropout(p=0.5, inplace=False)
+        )
+      )
+      (norm): LayerNorm((300,), eps=1e-12, elementwise_affine=True)
+    )
+    (decoder): TransformerDecoder(
+      (layers): ModuleList(
+        (0): TransformerDecoderLayer(
+          (self_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=300, out_features=300, bias=True)
+          )
+          (multihead_attn): MultiheadAttention(
+            (out_proj): NonDynamicallyQuantizableLinear(in_features=300, out_features=300, bias=True)
+          )
+          (linear1): Linear(in_features=300, out_features=256, bias=True)
+          (dropout): Dropout(p=0.5, inplace=False)
+          (linear2): Linear(in_features=256, out_features=300, bias=True)
+          (norm1): LayerNorm((300,), eps=1e-12, elementwise_affine=True)
+          (norm2): LayerNorm((300,), eps=1e-12, elementwise_affine=True)
+          (norm3): LayerNorm((300,), eps=1e-12, elementwise_affine=True)
+          (dropout1): Dropout(p=0.5, inplace=False)
+          (dropout2): Dropout(p=0.5, inplace=False)
+          (dropout3): Dropout(p=0.5, inplace=False)
+        )
+      )
+      (norm): LayerNorm((300,), eps=1e-12, elementwise_affine=True)
+    )
+  )
+  (LayerNorm): LayerNorm((300,), eps=1e-12, elementwise_affine=True)
+  (dropout): Dropout(p=0.5, inplace=False)
+  (loss_fct): CrossEntropyLoss()
+  (plm_embedding): Embedding(9965, 512, padding_idx=0)
+  (img_embedding): Embedding(9965, 512, padding_idx=0)
+  (text_adaptor): Linear(in_features=512, out_features=300, bias=True)
+  (img_adaptor): Linear(in_features=512, out_features=300, bias=True)
+)
+Trainable parameters: 308401.0
+Fri 20 Oct 2023 03:44:04 INFO  Trainable parameters: ['fusion_factor', 'LayerNorm.weight', 'LayerNorm.bias', 'text_adaptor.weight', 'text_adaptor.bias', 'img_adaptor.weight', 'img_adaptor.bias']
+Fri 20 Oct 2023 03:44:06 INFO  Discovering multi-modal user interest before 0-th epoch
+Fri 20 Oct 2023 03:44:08 INFO  Finish multi-modal interest discovery before 0-th epoch
+Fri 20 Oct 2023 03:44:22 INFO  epoch 0 training [time: 16.21s, train loss: 2199.8515]
+Fri 20 Oct 2023 03:44:24 INFO  epoch 0 evaluating [time: 2.10s, valid_score: 0.063500]
+Fri 20 Oct 2023 03:44:24 INFO  valid result: 
+hit@10 : 0.0992    hit@50 : 0.1629    ndcg@10 : 0.0635    ndcg@50 : 0.0771
+Fri 20 Oct 2023 03:44:25 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:44:25 INFO  Discovering multi-modal user interest before 1-th epoch
+Fri 20 Oct 2023 03:44:25 INFO  Finish multi-modal interest discovery before 1-th epoch
+Fri 20 Oct 2023 03:44:39 INFO  epoch 1 training [time: 14.07s, train loss: 2138.9640]
+Fri 20 Oct 2023 03:44:41 INFO  epoch 1 evaluating [time: 2.09s, valid_score: 0.072400]
+Fri 20 Oct 2023 03:44:41 INFO  valid result: 
+hit@10 : 0.1107    hit@50 : 0.1813    ndcg@10 : 0.0724    ndcg@50 : 0.0873
+Fri 20 Oct 2023 03:44:41 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:44:41 INFO  Discovering multi-modal user interest before 2-th epoch
+Fri 20 Oct 2023 03:44:41 INFO  Finish multi-modal interest discovery before 2-th epoch
+Fri 20 Oct 2023 03:44:56 INFO  epoch 2 training [time: 14.55s, train loss: 2116.1629]
+Fri 20 Oct 2023 03:44:58 INFO  epoch 2 evaluating [time: 2.08s, valid_score: 0.075900]
+Fri 20 Oct 2023 03:44:58 INFO  valid result: 
+hit@10 : 0.1159    hit@50 : 0.1951    ndcg@10 : 0.0759    ndcg@50 : 0.0927
+Fri 20 Oct 2023 03:44:58 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:44:58 INFO  Discovering multi-modal user interest before 3-th epoch
+Fri 20 Oct 2023 03:44:58 INFO  Finish multi-modal interest discovery before 3-th epoch
+Fri 20 Oct 2023 03:45:13 INFO  epoch 3 training [time: 14.49s, train loss: 2101.5228]
+Fri 20 Oct 2023 03:45:15 INFO  epoch 3 evaluating [time: 2.10s, valid_score: 0.077700]
+Fri 20 Oct 2023 03:45:15 INFO  valid result: 
+hit@10 : 0.12    hit@50 : 0.2035    ndcg@10 : 0.0777    ndcg@50 : 0.0955
+Fri 20 Oct 2023 03:45:15 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:45:15 INFO  Discovering multi-modal user interest before 4-th epoch
+Fri 20 Oct 2023 03:45:15 INFO  Finish multi-modal interest discovery before 4-th epoch
+Fri 20 Oct 2023 03:45:29 INFO  epoch 4 training [time: 14.20s, train loss: 2090.7841]
+Fri 20 Oct 2023 03:45:31 INFO  epoch 4 evaluating [time: 2.12s, valid_score: 0.079300]
+Fri 20 Oct 2023 03:45:31 INFO  valid result: 
+hit@10 : 0.1225    hit@50 : 0.2067    ndcg@10 : 0.0793    ndcg@50 : 0.0974
+Fri 20 Oct 2023 03:45:32 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:45:32 INFO  Discovering multi-modal user interest before 5-th epoch
+Fri 20 Oct 2023 03:45:32 INFO  Finish multi-modal interest discovery before 5-th epoch
+Fri 20 Oct 2023 03:45:46 INFO  epoch 5 training [time: 14.21s, train loss: 2082.3914]
+Fri 20 Oct 2023 03:45:48 INFO  epoch 5 evaluating [time: 2.08s, valid_score: 0.079400]
+Fri 20 Oct 2023 03:45:48 INFO  valid result: 
+hit@10 : 0.1225    hit@50 : 0.2105    ndcg@10 : 0.0794    ndcg@50 : 0.0983
+Fri 20 Oct 2023 03:45:48 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:45:48 INFO  Discovering multi-modal user interest before 6-th epoch
+Fri 20 Oct 2023 03:45:48 INFO  Finish multi-modal interest discovery before 6-th epoch
+Fri 20 Oct 2023 03:46:03 INFO  epoch 6 training [time: 14.38s, train loss: 2076.1949]
+Fri 20 Oct 2023 03:46:05 INFO  epoch 6 evaluating [time: 2.07s, valid_score: 0.081400]
+Fri 20 Oct 2023 03:46:05 INFO  valid result: 
+hit@10 : 0.1249    hit@50 : 0.2146    ndcg@10 : 0.0814    ndcg@50 : 0.1006
+Fri 20 Oct 2023 03:46:05 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:46:05 INFO  Discovering multi-modal user interest before 7-th epoch
+Fri 20 Oct 2023 03:46:05 INFO  Finish multi-modal interest discovery before 7-th epoch
+Fri 20 Oct 2023 03:46:19 INFO  epoch 7 training [time: 14.17s, train loss: 2070.7100]
+Fri 20 Oct 2023 03:46:21 INFO  epoch 7 evaluating [time: 2.11s, valid_score: 0.083200]
+Fri 20 Oct 2023 03:46:21 INFO  valid result: 
+hit@10 : 0.1269    hit@50 : 0.2179    ndcg@10 : 0.0832    ndcg@50 : 0.1027
+Fri 20 Oct 2023 03:46:22 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:46:22 INFO  Discovering multi-modal user interest before 8-th epoch
+Fri 20 Oct 2023 03:46:22 INFO  Finish multi-modal interest discovery before 8-th epoch
+Fri 20 Oct 2023 03:46:36 INFO  epoch 8 training [time: 14.06s, train loss: 2064.7549]
+Fri 20 Oct 2023 03:46:38 INFO  epoch 8 evaluating [time: 2.06s, valid_score: 0.084100]
+Fri 20 Oct 2023 03:46:38 INFO  valid result: 
+hit@10 : 0.1296    hit@50 : 0.221    ndcg@10 : 0.0841    ndcg@50 : 0.1036
+Fri 20 Oct 2023 03:46:38 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:46:38 INFO  Discovering multi-modal user interest before 9-th epoch
+Fri 20 Oct 2023 03:46:38 INFO  Finish multi-modal interest discovery before 9-th epoch
+Fri 20 Oct 2023 03:46:52 INFO  epoch 9 training [time: 14.07s, train loss: 2060.2774]
+Fri 20 Oct 2023 03:46:54 INFO  epoch 9 evaluating [time: 2.08s, valid_score: 0.084700]
+Fri 20 Oct 2023 03:46:54 INFO  valid result: 
+hit@10 : 0.1312    hit@50 : 0.2231    ndcg@10 : 0.0847    ndcg@50 : 0.1042
+Fri 20 Oct 2023 03:46:54 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:46:54 INFO  Discovering multi-modal user interest before 10-th epoch
+Fri 20 Oct 2023 03:46:54 INFO  Finish multi-modal interest discovery before 10-th epoch
+Fri 20 Oct 2023 03:47:08 INFO  epoch 10 training [time: 13.99s, train loss: 2056.6146]
+Fri 20 Oct 2023 03:47:10 INFO  epoch 10 evaluating [time: 2.07s, valid_score: 0.084900]
+Fri 20 Oct 2023 03:47:10 INFO  valid result: 
+hit@10 : 0.1313    hit@50 : 0.2247    ndcg@10 : 0.0849    ndcg@50 : 0.1049
+Fri 20 Oct 2023 03:47:11 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:47:11 INFO  Discovering multi-modal user interest before 11-th epoch
+Fri 20 Oct 2023 03:47:11 INFO  Finish multi-modal interest discovery before 11-th epoch
+Fri 20 Oct 2023 03:47:25 INFO  epoch 11 training [time: 14.15s, train loss: 2052.9983]
+Fri 20 Oct 2023 03:47:27 INFO  epoch 11 evaluating [time: 2.05s, valid_score: 0.085900]
+Fri 20 Oct 2023 03:47:27 INFO  valid result: 
+hit@10 : 0.1324    hit@50 : 0.2266    ndcg@10 : 0.0859    ndcg@50 : 0.106
+Fri 20 Oct 2023 03:47:27 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:47:27 INFO  Discovering multi-modal user interest before 12-th epoch
+Fri 20 Oct 2023 03:47:27 INFO  Finish multi-modal interest discovery before 12-th epoch
+Fri 20 Oct 2023 03:47:41 INFO  epoch 12 training [time: 13.96s, train loss: 2049.0417]
+Fri 20 Oct 2023 03:47:43 INFO  epoch 12 evaluating [time: 2.11s, valid_score: 0.085600]
+Fri 20 Oct 2023 03:47:43 INFO  valid result: 
+hit@10 : 0.1333    hit@50 : 0.2285    ndcg@10 : 0.0856    ndcg@50 : 0.106
+Fri 20 Oct 2023 03:47:43 INFO  Discovering multi-modal user interest before 13-th epoch
+Fri 20 Oct 2023 03:47:43 INFO  Finish multi-modal interest discovery before 13-th epoch
+Fri 20 Oct 2023 03:47:57 INFO  epoch 13 training [time: 14.01s, train loss: 2046.5220]
+Fri 20 Oct 2023 03:48:00 INFO  epoch 13 evaluating [time: 2.23s, valid_score: 0.085900]
+Fri 20 Oct 2023 03:48:00 INFO  valid result: 
+hit@10 : 0.1332    hit@50 : 0.2296    ndcg@10 : 0.0859    ndcg@50 : 0.1065
+Fri 20 Oct 2023 03:48:00 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:48:00 INFO  Discovering multi-modal user interest before 14-th epoch
+Fri 20 Oct 2023 03:48:00 INFO  Finish multi-modal interest discovery before 14-th epoch
+Fri 20 Oct 2023 03:48:14 INFO  epoch 14 training [time: 13.85s, train loss: 2043.8703]
+Fri 20 Oct 2023 03:48:16 INFO  epoch 14 evaluating [time: 2.09s, valid_score: 0.085400]
+Fri 20 Oct 2023 03:48:16 INFO  valid result: 
+hit@10 : 0.132    hit@50 : 0.2301    ndcg@10 : 0.0854    ndcg@50 : 0.1063
+Fri 20 Oct 2023 03:48:16 INFO  Discovering multi-modal user interest before 15-th epoch
+Fri 20 Oct 2023 03:48:16 INFO  Finish multi-modal interest discovery before 15-th epoch
+Fri 20 Oct 2023 03:48:30 INFO  epoch 15 training [time: 14.18s, train loss: 2041.0933]
+Fri 20 Oct 2023 03:48:32 INFO  epoch 15 evaluating [time: 2.03s, valid_score: 0.086400]
+Fri 20 Oct 2023 03:48:32 INFO  valid result: 
+hit@10 : 0.1347    hit@50 : 0.231    ndcg@10 : 0.0864    ndcg@50 : 0.1069
+Fri 20 Oct 2023 03:48:32 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:48:32 INFO  Discovering multi-modal user interest before 16-th epoch
+Fri 20 Oct 2023 03:48:32 INFO  Finish multi-modal interest discovery before 16-th epoch
+Fri 20 Oct 2023 03:48:46 INFO  epoch 16 training [time: 13.81s, train loss: 2038.5450]
+Fri 20 Oct 2023 03:48:48 INFO  epoch 16 evaluating [time: 2.03s, valid_score: 0.087500]
+Fri 20 Oct 2023 03:48:48 INFO  valid result: 
+hit@10 : 0.1363    hit@50 : 0.2338    ndcg@10 : 0.0875    ndcg@50 : 0.1083
+Fri 20 Oct 2023 03:48:48 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:48:48 INFO  Discovering multi-modal user interest before 17-th epoch
+Fri 20 Oct 2023 03:48:48 INFO  Finish multi-modal interest discovery before 17-th epoch
+Fri 20 Oct 2023 03:49:02 INFO  epoch 17 training [time: 13.90s, train loss: 2036.0797]
+Fri 20 Oct 2023 03:49:04 INFO  epoch 17 evaluating [time: 2.04s, valid_score: 0.087300]
+Fri 20 Oct 2023 03:49:04 INFO  valid result: 
+hit@10 : 0.1349    hit@50 : 0.2352    ndcg@10 : 0.0873    ndcg@50 : 0.1086
+Fri 20 Oct 2023 03:49:04 INFO  Discovering multi-modal user interest before 18-th epoch
+Fri 20 Oct 2023 03:49:04 INFO  Finish multi-modal interest discovery before 18-th epoch
+Fri 20 Oct 2023 03:49:18 INFO  epoch 18 training [time: 13.85s, train loss: 2034.1732]
+Fri 20 Oct 2023 03:49:20 INFO  epoch 18 evaluating [time: 2.02s, valid_score: 0.086700]
+Fri 20 Oct 2023 03:49:20 INFO  valid result: 
+hit@10 : 0.1352    hit@50 : 0.235    ndcg@10 : 0.0867    ndcg@50 : 0.108
+Fri 20 Oct 2023 03:49:20 INFO  Discovering multi-modal user interest before 19-th epoch
+Fri 20 Oct 2023 03:49:20 INFO  Finish multi-modal interest discovery before 19-th epoch
+Fri 20 Oct 2023 03:49:34 INFO  epoch 19 training [time: 13.79s, train loss: 2032.2880]
+Fri 20 Oct 2023 03:49:36 INFO  epoch 19 evaluating [time: 2.03s, valid_score: 0.087700]
+Fri 20 Oct 2023 03:49:36 INFO  valid result: 
+hit@10 : 0.1351    hit@50 : 0.2364    ndcg@10 : 0.0877    ndcg@50 : 0.1093
+Fri 20 Oct 2023 03:49:36 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:49:36 INFO  Discovering multi-modal user interest before 20-th epoch
+Fri 20 Oct 2023 03:49:36 INFO  Finish multi-modal interest discovery before 20-th epoch
+Fri 20 Oct 2023 03:49:51 INFO  epoch 20 training [time: 14.14s, train loss: 2030.6470]
+Fri 20 Oct 2023 03:49:53 INFO  epoch 20 evaluating [time: 2.03s, valid_score: 0.087400]
+Fri 20 Oct 2023 03:49:53 INFO  valid result: 
+hit@10 : 0.136    hit@50 : 0.2372    ndcg@10 : 0.0874    ndcg@50 : 0.1089
+Fri 20 Oct 2023 03:49:53 INFO  Discovering multi-modal user interest before 21-th epoch
+Fri 20 Oct 2023 03:49:53 INFO  Finish multi-modal interest discovery before 21-th epoch
+Fri 20 Oct 2023 03:50:06 INFO  epoch 21 training [time: 13.84s, train loss: 2028.6896]
+Fri 20 Oct 2023 03:50:08 INFO  epoch 21 evaluating [time: 2.03s, valid_score: 0.087900]
+Fri 20 Oct 2023 03:50:08 INFO  valid result: 
+hit@10 : 0.1362    hit@50 : 0.2378    ndcg@10 : 0.0879    ndcg@50 : 0.1096
+Fri 20 Oct 2023 03:50:09 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:50:09 INFO  Discovering multi-modal user interest before 22-th epoch
+Fri 20 Oct 2023 03:50:09 INFO  Finish multi-modal interest discovery before 22-th epoch
+Fri 20 Oct 2023 03:50:23 INFO  epoch 22 training [time: 13.99s, train loss: 2026.3976]
+Fri 20 Oct 2023 03:50:25 INFO  epoch 22 evaluating [time: 2.10s, valid_score: 0.088100]
+Fri 20 Oct 2023 03:50:25 INFO  valid result: 
+hit@10 : 0.1367    hit@50 : 0.2378    ndcg@10 : 0.0881    ndcg@50 : 0.1096
+Fri 20 Oct 2023 03:50:25 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:50:25 INFO  Discovering multi-modal user interest before 23-th epoch
+Fri 20 Oct 2023 03:50:25 INFO  Finish multi-modal interest discovery before 23-th epoch
+Fri 20 Oct 2023 03:50:39 INFO  epoch 23 training [time: 13.70s, train loss: 2025.3051]
+Fri 20 Oct 2023 03:50:41 INFO  epoch 23 evaluating [time: 2.05s, valid_score: 0.088400]
+Fri 20 Oct 2023 03:50:41 INFO  valid result: 
+hit@10 : 0.1371    hit@50 : 0.239    ndcg@10 : 0.0884    ndcg@50 : 0.1101
+Fri 20 Oct 2023 03:50:41 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:50:41 INFO  Discovering multi-modal user interest before 24-th epoch
+Fri 20 Oct 2023 03:50:41 INFO  Finish multi-modal interest discovery before 24-th epoch
+Fri 20 Oct 2023 03:50:55 INFO  epoch 24 training [time: 13.90s, train loss: 2023.8524]
+Fri 20 Oct 2023 03:50:57 INFO  epoch 24 evaluating [time: 2.02s, valid_score: 0.088600]
+Fri 20 Oct 2023 03:50:57 INFO  valid result: 
+hit@10 : 0.1377    hit@50 : 0.2406    ndcg@10 : 0.0886    ndcg@50 : 0.1105
+Fri 20 Oct 2023 03:50:57 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:50:57 INFO  Discovering multi-modal user interest before 25-th epoch
+Fri 20 Oct 2023 03:50:57 INFO  Finish multi-modal interest discovery before 25-th epoch
+Fri 20 Oct 2023 03:51:11 INFO  epoch 25 training [time: 13.67s, train loss: 2022.5464]
+Fri 20 Oct 2023 03:51:13 INFO  epoch 25 evaluating [time: 2.02s, valid_score: 0.089200]
+Fri 20 Oct 2023 03:51:13 INFO  valid result: 
+hit@10 : 0.1387    hit@50 : 0.2404    ndcg@10 : 0.0892    ndcg@50 : 0.1109
+Fri 20 Oct 2023 03:51:13 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:51:13 INFO  Discovering multi-modal user interest before 26-th epoch
+Fri 20 Oct 2023 03:51:13 INFO  Finish multi-modal interest discovery before 26-th epoch
+Fri 20 Oct 2023 03:51:27 INFO  epoch 26 training [time: 13.73s, train loss: 2021.2858]
+Fri 20 Oct 2023 03:51:29 INFO  epoch 26 evaluating [time: 2.01s, valid_score: 0.088600]
+Fri 20 Oct 2023 03:51:29 INFO  valid result: 
+hit@10 : 0.1388    hit@50 : 0.2409    ndcg@10 : 0.0886    ndcg@50 : 0.1104
+Fri 20 Oct 2023 03:51:29 INFO  Discovering multi-modal user interest before 27-th epoch
+Fri 20 Oct 2023 03:51:29 INFO  Finish multi-modal interest discovery before 27-th epoch
+Fri 20 Oct 2023 03:51:43 INFO  epoch 27 training [time: 13.66s, train loss: 2019.3995]
+Fri 20 Oct 2023 03:51:45 INFO  epoch 27 evaluating [time: 2.04s, valid_score: 0.089400]
+Fri 20 Oct 2023 03:51:45 INFO  valid result: 
+hit@10 : 0.1397    hit@50 : 0.2418    ndcg@10 : 0.0894    ndcg@50 : 0.1112
+Fri 20 Oct 2023 03:51:45 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:51:45 INFO  Discovering multi-modal user interest before 28-th epoch
+Fri 20 Oct 2023 03:51:45 INFO  Finish multi-modal interest discovery before 28-th epoch
+Fri 20 Oct 2023 03:51:59 INFO  epoch 28 training [time: 13.66s, train loss: 2018.1122]
+Fri 20 Oct 2023 03:52:01 INFO  epoch 28 evaluating [time: 2.22s, valid_score: 0.089600]
+Fri 20 Oct 2023 03:52:01 INFO  valid result: 
+hit@10 : 0.1391    hit@50 : 0.2416    ndcg@10 : 0.0896    ndcg@50 : 0.1115
+Fri 20 Oct 2023 03:52:01 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:52:01 INFO  Discovering multi-modal user interest before 29-th epoch
+Fri 20 Oct 2023 03:52:01 INFO  Finish multi-modal interest discovery before 29-th epoch
+Fri 20 Oct 2023 03:52:15 INFO  epoch 29 training [time: 13.67s, train loss: 2017.3854]
+Fri 20 Oct 2023 03:52:17 INFO  epoch 29 evaluating [time: 2.02s, valid_score: 0.088900]
+Fri 20 Oct 2023 03:52:17 INFO  valid result: 
+hit@10 : 0.1382    hit@50 : 0.2423    ndcg@10 : 0.0889    ndcg@50 : 0.1111
+Fri 20 Oct 2023 03:52:17 INFO  Discovering multi-modal user interest before 30-th epoch
+Fri 20 Oct 2023 03:52:17 INFO  Finish multi-modal interest discovery before 30-th epoch
+Fri 20 Oct 2023 03:52:31 INFO  epoch 30 training [time: 13.70s, train loss: 2015.6674]
+Fri 20 Oct 2023 03:52:33 INFO  epoch 30 evaluating [time: 2.01s, valid_score: 0.088400]
+Fri 20 Oct 2023 03:52:33 INFO  valid result: 
+hit@10 : 0.1371    hit@50 : 0.2437    ndcg@10 : 0.0884    ndcg@50 : 0.1111
+Fri 20 Oct 2023 03:52:33 INFO  Discovering multi-modal user interest before 31-th epoch
+Fri 20 Oct 2023 03:52:33 INFO  Finish multi-modal interest discovery before 31-th epoch
+Fri 20 Oct 2023 03:52:46 INFO  epoch 31 training [time: 13.62s, train loss: 2014.8473]
+Fri 20 Oct 2023 03:52:48 INFO  epoch 31 evaluating [time: 2.00s, valid_score: 0.089000]
+Fri 20 Oct 2023 03:52:48 INFO  valid result: 
+hit@10 : 0.1385    hit@50 : 0.2435    ndcg@10 : 0.089    ndcg@50 : 0.1114
+Fri 20 Oct 2023 03:52:48 INFO  Discovering multi-modal user interest before 32-th epoch
+Fri 20 Oct 2023 03:52:48 INFO  Finish multi-modal interest discovery before 32-th epoch
+Fri 20 Oct 2023 03:53:02 INFO  epoch 32 training [time: 13.69s, train loss: 2013.6526]
+Fri 20 Oct 2023 03:53:04 INFO  epoch 32 evaluating [time: 2.10s, valid_score: 0.089000]
+Fri 20 Oct 2023 03:53:04 INFO  valid result: 
+hit@10 : 0.138    hit@50 : 0.2433    ndcg@10 : 0.089    ndcg@50 : 0.1114
+Fri 20 Oct 2023 03:53:04 INFO  Discovering multi-modal user interest before 33-th epoch
+Fri 20 Oct 2023 03:53:04 INFO  Finish multi-modal interest discovery before 33-th epoch
+Fri 20 Oct 2023 03:53:18 INFO  epoch 33 training [time: 13.87s, train loss: 2012.6746]
+Fri 20 Oct 2023 03:53:20 INFO  epoch 33 evaluating [time: 2.06s, valid_score: 0.089400]
+Fri 20 Oct 2023 03:53:20 INFO  valid result: 
+hit@10 : 0.1395    hit@50 : 0.2447    ndcg@10 : 0.0894    ndcg@50 : 0.1118
+Fri 20 Oct 2023 03:53:20 INFO  Discovering multi-modal user interest before 34-th epoch
+Fri 20 Oct 2023 03:53:20 INFO  Finish multi-modal interest discovery before 34-th epoch
+Fri 20 Oct 2023 03:53:34 INFO  epoch 34 training [time: 13.83s, train loss: 2011.3608]
+Fri 20 Oct 2023 03:53:36 INFO  epoch 34 evaluating [time: 2.02s, valid_score: 0.090200]
+Fri 20 Oct 2023 03:53:36 INFO  valid result: 
+hit@10 : 0.1415    hit@50 : 0.2446    ndcg@10 : 0.0902    ndcg@50 : 0.1122
+Fri 20 Oct 2023 03:53:36 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:53:36 INFO  Discovering multi-modal user interest before 35-th epoch
+Fri 20 Oct 2023 03:53:36 INFO  Finish multi-modal interest discovery before 35-th epoch
+Fri 20 Oct 2023 03:53:50 INFO  epoch 35 training [time: 13.67s, train loss: 2010.1284]
+Fri 20 Oct 2023 03:53:52 INFO  epoch 35 evaluating [time: 2.02s, valid_score: 0.089800]
+Fri 20 Oct 2023 03:53:52 INFO  valid result: 
+hit@10 : 0.1404    hit@50 : 0.2443    ndcg@10 : 0.0898    ndcg@50 : 0.1119
+Fri 20 Oct 2023 03:53:52 INFO  Discovering multi-modal user interest before 36-th epoch
+Fri 20 Oct 2023 03:53:52 INFO  Finish multi-modal interest discovery before 36-th epoch
+Fri 20 Oct 2023 03:54:06 INFO  epoch 36 training [time: 13.58s, train loss: 2009.3834]
+Fri 20 Oct 2023 03:54:08 INFO  epoch 36 evaluating [time: 2.02s, valid_score: 0.089500]
+Fri 20 Oct 2023 03:54:08 INFO  valid result: 
+hit@10 : 0.1401    hit@50 : 0.2454    ndcg@10 : 0.0895    ndcg@50 : 0.1119
+Fri 20 Oct 2023 03:54:08 INFO  Discovering multi-modal user interest before 37-th epoch
+Fri 20 Oct 2023 03:54:08 INFO  Finish multi-modal interest discovery before 37-th epoch
+Fri 20 Oct 2023 03:54:21 INFO  epoch 37 training [time: 13.75s, train loss: 2008.7586]
+Fri 20 Oct 2023 03:54:23 INFO  epoch 37 evaluating [time: 2.01s, valid_score: 0.090300]
+Fri 20 Oct 2023 03:54:23 INFO  valid result: 
+hit@10 : 0.141    hit@50 : 0.2457    ndcg@10 : 0.0903    ndcg@50 : 0.1125
+Fri 20 Oct 2023 03:54:24 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:54:24 INFO  Discovering multi-modal user interest before 38-th epoch
+Fri 20 Oct 2023 03:54:24 INFO  Finish multi-modal interest discovery before 38-th epoch
+Fri 20 Oct 2023 03:54:37 INFO  epoch 38 training [time: 13.58s, train loss: 2007.9226]
+Fri 20 Oct 2023 03:54:39 INFO  epoch 38 evaluating [time: 2.04s, valid_score: 0.090200]
+Fri 20 Oct 2023 03:54:39 INFO  valid result: 
+hit@10 : 0.141    hit@50 : 0.246    ndcg@10 : 0.0902    ndcg@50 : 0.1126
+Fri 20 Oct 2023 03:54:39 INFO  Discovering multi-modal user interest before 39-th epoch
+Fri 20 Oct 2023 03:54:39 INFO  Finish multi-modal interest discovery before 39-th epoch
+Fri 20 Oct 2023 03:54:53 INFO  epoch 39 training [time: 13.59s, train loss: 2007.2105]
+Fri 20 Oct 2023 03:54:55 INFO  epoch 39 evaluating [time: 2.00s, valid_score: 0.090400]
+Fri 20 Oct 2023 03:54:55 INFO  valid result: 
+hit@10 : 0.1409    hit@50 : 0.2467    ndcg@10 : 0.0904    ndcg@50 : 0.1129
+Fri 20 Oct 2023 03:54:55 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:54:55 INFO  Discovering multi-modal user interest before 40-th epoch
+Fri 20 Oct 2023 03:54:55 INFO  Finish multi-modal interest discovery before 40-th epoch
+Fri 20 Oct 2023 03:55:09 INFO  epoch 40 training [time: 13.62s, train loss: 2005.8109]
+Fri 20 Oct 2023 03:55:11 INFO  epoch 40 evaluating [time: 2.00s, valid_score: 0.089400]
+Fri 20 Oct 2023 03:55:11 INFO  valid result: 
+hit@10 : 0.1399    hit@50 : 0.2464    ndcg@10 : 0.0894    ndcg@50 : 0.1121
+Fri 20 Oct 2023 03:55:11 INFO  Discovering multi-modal user interest before 41-th epoch
+Fri 20 Oct 2023 03:55:11 INFO  Finish multi-modal interest discovery before 41-th epoch
+Fri 20 Oct 2023 03:55:24 INFO  epoch 41 training [time: 13.51s, train loss: 2005.0490]
+Fri 20 Oct 2023 03:55:26 INFO  epoch 41 evaluating [time: 2.12s, valid_score: 0.091100]
+Fri 20 Oct 2023 03:55:26 INFO  valid result: 
+hit@10 : 0.1421    hit@50 : 0.2465    ndcg@10 : 0.0911    ndcg@50 : 0.1134
+Fri 20 Oct 2023 03:55:27 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:55:27 INFO  Discovering multi-modal user interest before 42-th epoch
+Fri 20 Oct 2023 03:55:27 INFO  Finish multi-modal interest discovery before 42-th epoch
+Fri 20 Oct 2023 03:55:41 INFO  epoch 42 training [time: 13.90s, train loss: 2004.3345]
+Fri 20 Oct 2023 03:55:43 INFO  epoch 42 evaluating [time: 2.21s, valid_score: 0.090800]
+Fri 20 Oct 2023 03:55:43 INFO  valid result: 
+hit@10 : 0.1416    hit@50 : 0.2485    ndcg@10 : 0.0908    ndcg@50 : 0.1135
+Fri 20 Oct 2023 03:55:43 INFO  Discovering multi-modal user interest before 43-th epoch
+Fri 20 Oct 2023 03:55:43 INFO  Finish multi-modal interest discovery before 43-th epoch
+Fri 20 Oct 2023 03:55:56 INFO  epoch 43 training [time: 13.63s, train loss: 2002.6500]
+Fri 20 Oct 2023 03:55:59 INFO  epoch 43 evaluating [time: 2.07s, valid_score: 0.089800]
+Fri 20 Oct 2023 03:55:59 INFO  valid result: 
+hit@10 : 0.1395    hit@50 : 0.2479    ndcg@10 : 0.0898    ndcg@50 : 0.1129
+Fri 20 Oct 2023 03:55:59 INFO  Discovering multi-modal user interest before 44-th epoch
+Fri 20 Oct 2023 03:55:59 INFO  Finish multi-modal interest discovery before 44-th epoch
+Fri 20 Oct 2023 03:56:12 INFO  epoch 44 training [time: 13.57s, train loss: 2002.7732]
+Fri 20 Oct 2023 03:56:14 INFO  epoch 44 evaluating [time: 2.08s, valid_score: 0.089600]
+Fri 20 Oct 2023 03:56:14 INFO  valid result: 
+hit@10 : 0.1404    hit@50 : 0.2474    ndcg@10 : 0.0896    ndcg@50 : 0.1124
+Fri 20 Oct 2023 03:56:14 INFO  Discovering multi-modal user interest before 45-th epoch
+Fri 20 Oct 2023 03:56:14 INFO  Finish multi-modal interest discovery before 45-th epoch
+Fri 20 Oct 2023 03:56:28 INFO  epoch 45 training [time: 13.56s, train loss: 2002.4808]
+Fri 20 Oct 2023 03:56:30 INFO  epoch 45 evaluating [time: 2.02s, valid_score: 0.091300]
+Fri 20 Oct 2023 03:56:30 INFO  valid result: 
+hit@10 : 0.1426    hit@50 : 0.2491    ndcg@10 : 0.0913    ndcg@50 : 0.114
+Fri 20 Oct 2023 03:56:30 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:56:30 INFO  Discovering multi-modal user interest before 46-th epoch
+Fri 20 Oct 2023 03:56:30 INFO  Finish multi-modal interest discovery before 46-th epoch
+Fri 20 Oct 2023 03:56:44 INFO  epoch 46 training [time: 13.55s, train loss: 2001.7345]
+Fri 20 Oct 2023 03:56:46 INFO  epoch 46 evaluating [time: 2.20s, valid_score: 0.091400]
+Fri 20 Oct 2023 03:56:46 INFO  valid result: 
+hit@10 : 0.1428    hit@50 : 0.2468    ndcg@10 : 0.0914    ndcg@50 : 0.1135
+Fri 20 Oct 2023 03:56:46 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:56:46 INFO  Discovering multi-modal user interest before 47-th epoch
+Fri 20 Oct 2023 03:56:46 INFO  Finish multi-modal interest discovery before 47-th epoch
+Fri 20 Oct 2023 03:57:00 INFO  epoch 47 training [time: 13.59s, train loss: 2000.5126]
+Fri 20 Oct 2023 03:57:02 INFO  epoch 47 evaluating [time: 2.04s, valid_score: 0.090800]
+Fri 20 Oct 2023 03:57:02 INFO  valid result: 
+hit@10 : 0.1421    hit@50 : 0.2499    ndcg@10 : 0.0908    ndcg@50 : 0.1137
+Fri 20 Oct 2023 03:57:02 INFO  Discovering multi-modal user interest before 48-th epoch
+Fri 20 Oct 2023 03:57:02 INFO  Finish multi-modal interest discovery before 48-th epoch
+Fri 20 Oct 2023 03:57:15 INFO  epoch 48 training [time: 13.49s, train loss: 1999.7349]
+Fri 20 Oct 2023 03:57:17 INFO  epoch 48 evaluating [time: 2.05s, valid_score: 0.091200]
+Fri 20 Oct 2023 03:57:17 INFO  valid result: 
+hit@10 : 0.1425    hit@50 : 0.2492    ndcg@10 : 0.0912    ndcg@50 : 0.1139
+Fri 20 Oct 2023 03:57:17 INFO  Discovering multi-modal user interest before 49-th epoch
+Fri 20 Oct 2023 03:57:17 INFO  Finish multi-modal interest discovery before 49-th epoch
+Fri 20 Oct 2023 03:57:31 INFO  epoch 49 training [time: 13.60s, train loss: 1998.5336]
+Fri 20 Oct 2023 03:57:33 INFO  epoch 49 evaluating [time: 2.01s, valid_score: 0.092300]
+Fri 20 Oct 2023 03:57:33 INFO  valid result: 
+hit@10 : 0.1435    hit@50 : 0.2499    ndcg@10 : 0.0923    ndcg@50 : 0.1149
+Fri 20 Oct 2023 03:57:33 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 03:57:33 INFO  Discovering multi-modal user interest before 50-th epoch
+Fri 20 Oct 2023 03:57:33 INFO  Finish multi-modal interest discovery before 50-th epoch
+Fri 20 Oct 2023 03:57:47 INFO  epoch 50 training [time: 13.51s, train loss: 1998.7170]
+Fri 20 Oct 2023 03:57:49 INFO  epoch 50 evaluating [time: 1.98s, valid_score: 0.090700]
+Fri 20 Oct 2023 03:57:49 INFO  valid result: 
+hit@10 : 0.1421    hit@50 : 0.2485    ndcg@10 : 0.0907    ndcg@50 : 0.1134
+Fri 20 Oct 2023 03:57:49 INFO  Discovering multi-modal user interest before 51-th epoch
+Fri 20 Oct 2023 03:57:49 INFO  Finish multi-modal interest discovery before 51-th epoch
+Fri 20 Oct 2023 03:58:02 INFO  epoch 51 training [time: 13.73s, train loss: 1997.6191]
+Fri 20 Oct 2023 03:58:04 INFO  epoch 51 evaluating [time: 2.01s, valid_score: 0.091500]
+Fri 20 Oct 2023 03:58:04 INFO  valid result: 
+hit@10 : 0.1433    hit@50 : 0.2488    ndcg@10 : 0.0915    ndcg@50 : 0.114
+Fri 20 Oct 2023 03:58:04 INFO  Discovering multi-modal user interest before 52-th epoch
+Fri 20 Oct 2023 03:58:04 INFO  Finish multi-modal interest discovery before 52-th epoch
+Fri 20 Oct 2023 03:58:18 INFO  epoch 52 training [time: 13.50s, train loss: 1996.8526]
+Fri 20 Oct 2023 03:58:20 INFO  epoch 52 evaluating [time: 2.00s, valid_score: 0.091500]
+Fri 20 Oct 2023 03:58:20 INFO  valid result: 
+hit@10 : 0.1433    hit@50 : 0.2505    ndcg@10 : 0.0915    ndcg@50 : 0.1143
+Fri 20 Oct 2023 03:58:20 INFO  Discovering multi-modal user interest before 53-th epoch
+Fri 20 Oct 2023 03:58:20 INFO  Finish multi-modal interest discovery before 53-th epoch
+Fri 20 Oct 2023 03:58:33 INFO  epoch 53 training [time: 13.55s, train loss: 1996.7263]
+Fri 20 Oct 2023 03:58:36 INFO  epoch 53 evaluating [time: 2.08s, valid_score: 0.092100]
+Fri 20 Oct 2023 03:58:36 INFO  valid result: 
+hit@10 : 0.143    hit@50 : 0.2509    ndcg@10 : 0.0921    ndcg@50 : 0.1152
+Fri 20 Oct 2023 03:58:36 INFO  Discovering multi-modal user interest before 54-th epoch
+Fri 20 Oct 2023 03:58:36 INFO  Finish multi-modal interest discovery before 54-th epoch
+Fri 20 Oct 2023 03:58:49 INFO  epoch 54 training [time: 13.44s, train loss: 1995.7573]
+Fri 20 Oct 2023 03:58:51 INFO  epoch 54 evaluating [time: 1.97s, valid_score: 0.091100]
+Fri 20 Oct 2023 03:58:51 INFO  valid result: 
+hit@10 : 0.1418    hit@50 : 0.2502    ndcg@10 : 0.0911    ndcg@50 : 0.1143
+Fri 20 Oct 2023 03:58:51 INFO  Discovering multi-modal user interest before 55-th epoch
+Fri 20 Oct 2023 03:58:51 INFO  Finish multi-modal interest discovery before 55-th epoch
+Fri 20 Oct 2023 03:59:05 INFO  epoch 55 training [time: 13.75s, train loss: 1994.7212]
+Fri 20 Oct 2023 03:59:07 INFO  epoch 55 evaluating [time: 2.03s, valid_score: 0.091800]
+Fri 20 Oct 2023 03:59:07 INFO  valid result: 
+hit@10 : 0.1427    hit@50 : 0.2508    ndcg@10 : 0.0918    ndcg@50 : 0.1148
+Fri 20 Oct 2023 03:59:07 INFO  Discovering multi-modal user interest before 56-th epoch
+Fri 20 Oct 2023 03:59:07 INFO  Finish multi-modal interest discovery before 56-th epoch
+Fri 20 Oct 2023 03:59:20 INFO  epoch 56 training [time: 13.49s, train loss: 1994.1052]
+Fri 20 Oct 2023 03:59:22 INFO  epoch 56 evaluating [time: 2.01s, valid_score: 0.091300]
+Fri 20 Oct 2023 03:59:22 INFO  valid result: 
+hit@10 : 0.1433    hit@50 : 0.25    ndcg@10 : 0.0913    ndcg@50 : 0.114
+Fri 20 Oct 2023 03:59:22 INFO  Discovering multi-modal user interest before 57-th epoch
+Fri 20 Oct 2023 03:59:22 INFO  Finish multi-modal interest discovery before 57-th epoch
+Fri 20 Oct 2023 03:59:36 INFO  epoch 57 training [time: 13.71s, train loss: 1994.4362]
+Fri 20 Oct 2023 03:59:38 INFO  epoch 57 evaluating [time: 2.12s, valid_score: 0.091700]
+Fri 20 Oct 2023 03:59:38 INFO  valid result: 
+hit@10 : 0.144    hit@50 : 0.2503    ndcg@10 : 0.0917    ndcg@50 : 0.1144
+Fri 20 Oct 2023 03:59:38 INFO  Discovering multi-modal user interest before 58-th epoch
+Fri 20 Oct 2023 03:59:38 INFO  Finish multi-modal interest discovery before 58-th epoch
+Fri 20 Oct 2023 03:59:52 INFO  epoch 58 training [time: 13.59s, train loss: 1993.4079]
+Fri 20 Oct 2023 03:59:54 INFO  epoch 58 evaluating [time: 2.11s, valid_score: 0.091800]
+Fri 20 Oct 2023 03:59:54 INFO  valid result: 
+hit@10 : 0.143    hit@50 : 0.25    ndcg@10 : 0.0918    ndcg@50 : 0.1146
+Fri 20 Oct 2023 03:59:54 INFO  Discovering multi-modal user interest before 59-th epoch
+Fri 20 Oct 2023 03:59:54 INFO  Finish multi-modal interest discovery before 59-th epoch
+Fri 20 Oct 2023 04:00:07 INFO  epoch 59 training [time: 13.47s, train loss: 1993.4404]
+Fri 20 Oct 2023 04:00:09 INFO  epoch 59 evaluating [time: 1.99s, valid_score: 0.092600]
+Fri 20 Oct 2023 04:00:09 INFO  valid result: 
+hit@10 : 0.1447    hit@50 : 0.2519    ndcg@10 : 0.0926    ndcg@50 : 0.1154
+Fri 20 Oct 2023 04:00:10 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:00:10 INFO  Discovering multi-modal user interest before 60-th epoch
+Fri 20 Oct 2023 04:00:10 INFO  Finish multi-modal interest discovery before 60-th epoch
+Fri 20 Oct 2023 04:00:23 INFO  epoch 60 training [time: 13.72s, train loss: 1991.7571]
+Fri 20 Oct 2023 04:00:25 INFO  epoch 60 evaluating [time: 2.00s, valid_score: 0.092100]
+Fri 20 Oct 2023 04:00:25 INFO  valid result: 
+hit@10 : 0.1435    hit@50 : 0.2511    ndcg@10 : 0.0921    ndcg@50 : 0.115
+Fri 20 Oct 2023 04:00:25 INFO  Discovering multi-modal user interest before 61-th epoch
+Fri 20 Oct 2023 04:00:25 INFO  Finish multi-modal interest discovery before 61-th epoch
+Fri 20 Oct 2023 04:00:39 INFO  epoch 61 training [time: 13.51s, train loss: 1991.2048]
+Fri 20 Oct 2023 04:00:41 INFO  epoch 61 evaluating [time: 1.97s, valid_score: 0.092200]
+Fri 20 Oct 2023 04:00:41 INFO  valid result: 
+hit@10 : 0.1432    hit@50 : 0.2495    ndcg@10 : 0.0922    ndcg@50 : 0.1148
+Fri 20 Oct 2023 04:00:41 INFO  Discovering multi-modal user interest before 62-th epoch
+Fri 20 Oct 2023 04:00:41 INFO  Finish multi-modal interest discovery before 62-th epoch
+Fri 20 Oct 2023 04:00:54 INFO  epoch 62 training [time: 13.48s, train loss: 1991.5426]
+Fri 20 Oct 2023 04:00:56 INFO  epoch 62 evaluating [time: 2.07s, valid_score: 0.091900]
+Fri 20 Oct 2023 04:00:56 INFO  valid result: 
+hit@10 : 0.1428    hit@50 : 0.2512    ndcg@10 : 0.0919    ndcg@50 : 0.115
+Fri 20 Oct 2023 04:00:56 INFO  Discovering multi-modal user interest before 63-th epoch
+Fri 20 Oct 2023 04:00:56 INFO  Finish multi-modal interest discovery before 63-th epoch
+Fri 20 Oct 2023 04:01:10 INFO  epoch 63 training [time: 13.46s, train loss: 1990.4465]
+Fri 20 Oct 2023 04:01:12 INFO  epoch 63 evaluating [time: 2.04s, valid_score: 0.091500]
+Fri 20 Oct 2023 04:01:12 INFO  valid result: 
+hit@10 : 0.1429    hit@50 : 0.251    ndcg@10 : 0.0915    ndcg@50 : 0.1146
+Fri 20 Oct 2023 04:01:12 INFO  Discovering multi-modal user interest before 64-th epoch
+Fri 20 Oct 2023 04:01:12 INFO  Finish multi-modal interest discovery before 64-th epoch
+Fri 20 Oct 2023 04:01:25 INFO  epoch 64 training [time: 13.63s, train loss: 1989.8608]
+Fri 20 Oct 2023 04:01:27 INFO  epoch 64 evaluating [time: 1.97s, valid_score: 0.092200]
+Fri 20 Oct 2023 04:01:27 INFO  valid result: 
+hit@10 : 0.143    hit@50 : 0.2516    ndcg@10 : 0.0922    ndcg@50 : 0.1154
+Fri 20 Oct 2023 04:01:27 INFO  Discovering multi-modal user interest before 65-th epoch
+Fri 20 Oct 2023 04:01:27 INFO  Finish multi-modal interest discovery before 65-th epoch
+Fri 20 Oct 2023 04:01:41 INFO  epoch 65 training [time: 13.50s, train loss: 1989.8315]
+Fri 20 Oct 2023 04:01:43 INFO  epoch 65 evaluating [time: 2.06s, valid_score: 0.092000]
+Fri 20 Oct 2023 04:01:43 INFO  valid result: 
+hit@10 : 0.1436    hit@50 : 0.2526    ndcg@10 : 0.092    ndcg@50 : 0.1152
+Fri 20 Oct 2023 04:01:43 INFO  Discovering multi-modal user interest before 66-th epoch
+Fri 20 Oct 2023 04:01:43 INFO  Finish multi-modal interest discovery before 66-th epoch
+Fri 20 Oct 2023 04:01:56 INFO  epoch 66 training [time: 13.38s, train loss: 1988.8930]
+Fri 20 Oct 2023 04:01:58 INFO  epoch 66 evaluating [time: 1.98s, valid_score: 0.092600]
+Fri 20 Oct 2023 04:01:58 INFO  valid result: 
+hit@10 : 0.1441    hit@50 : 0.2527    ndcg@10 : 0.0926    ndcg@50 : 0.1157
+Fri 20 Oct 2023 04:01:59 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:01:59 INFO  Discovering multi-modal user interest before 67-th epoch
+Fri 20 Oct 2023 04:01:59 INFO  Finish multi-modal interest discovery before 67-th epoch
+Fri 20 Oct 2023 04:02:12 INFO  epoch 67 training [time: 13.51s, train loss: 1988.7306]
+Fri 20 Oct 2023 04:02:14 INFO  epoch 67 evaluating [time: 2.02s, valid_score: 0.092300]
+Fri 20 Oct 2023 04:02:14 INFO  valid result: 
+hit@10 : 0.1445    hit@50 : 0.252    ndcg@10 : 0.0923    ndcg@50 : 0.1153
+Fri 20 Oct 2023 04:02:14 INFO  Discovering multi-modal user interest before 68-th epoch
+Fri 20 Oct 2023 04:02:14 INFO  Finish multi-modal interest discovery before 68-th epoch
+Fri 20 Oct 2023 04:02:27 INFO  epoch 68 training [time: 13.35s, train loss: 1988.4301]
+Fri 20 Oct 2023 04:02:30 INFO  epoch 68 evaluating [time: 2.07s, valid_score: 0.092000]
+Fri 20 Oct 2023 04:02:30 INFO  valid result: 
+hit@10 : 0.1435    hit@50 : 0.2523    ndcg@10 : 0.092    ndcg@50 : 0.1151
+Fri 20 Oct 2023 04:02:30 INFO  Discovering multi-modal user interest before 69-th epoch
+Fri 20 Oct 2023 04:02:30 INFO  Finish multi-modal interest discovery before 69-th epoch
+Fri 20 Oct 2023 04:02:43 INFO  epoch 69 training [time: 13.65s, train loss: 1987.7890]
+Fri 20 Oct 2023 04:02:45 INFO  epoch 69 evaluating [time: 1.98s, valid_score: 0.092000]
+Fri 20 Oct 2023 04:02:45 INFO  valid result: 
+hit@10 : 0.1438    hit@50 : 0.2507    ndcg@10 : 0.092    ndcg@50 : 0.1149
+Fri 20 Oct 2023 04:02:45 INFO  Discovering multi-modal user interest before 70-th epoch
+Fri 20 Oct 2023 04:02:45 INFO  Finish multi-modal interest discovery before 70-th epoch
+Fri 20 Oct 2023 04:02:59 INFO  epoch 70 training [time: 13.41s, train loss: 1987.0253]
+Fri 20 Oct 2023 04:03:01 INFO  epoch 70 evaluating [time: 1.98s, valid_score: 0.092600]
+Fri 20 Oct 2023 04:03:01 INFO  valid result: 
+hit@10 : 0.1438    hit@50 : 0.2511    ndcg@10 : 0.0926    ndcg@50 : 0.1155
+Fri 20 Oct 2023 04:03:01 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:03:01 INFO  Discovering multi-modal user interest before 71-th epoch
+Fri 20 Oct 2023 04:03:01 INFO  Finish multi-modal interest discovery before 71-th epoch
+Fri 20 Oct 2023 04:03:14 INFO  epoch 71 training [time: 13.40s, train loss: 1986.9496]
+Fri 20 Oct 2023 04:03:16 INFO  epoch 71 evaluating [time: 1.98s, valid_score: 0.092100]
+Fri 20 Oct 2023 04:03:16 INFO  valid result: 
+hit@10 : 0.144    hit@50 : 0.2527    ndcg@10 : 0.0921    ndcg@50 : 0.1152
+Fri 20 Oct 2023 04:03:16 INFO  Discovering multi-modal user interest before 72-th epoch
+Fri 20 Oct 2023 04:03:16 INFO  Finish multi-modal interest discovery before 72-th epoch
+Fri 20 Oct 2023 04:03:30 INFO  epoch 72 training [time: 13.46s, train loss: 1985.8546]
+Fri 20 Oct 2023 04:03:32 INFO  epoch 72 evaluating [time: 2.10s, valid_score: 0.092300]
+Fri 20 Oct 2023 04:03:32 INFO  valid result: 
+hit@10 : 0.1437    hit@50 : 0.2527    ndcg@10 : 0.0923    ndcg@50 : 0.1156
+Fri 20 Oct 2023 04:03:32 INFO  Discovering multi-modal user interest before 73-th epoch
+Fri 20 Oct 2023 04:03:32 INFO  Finish multi-modal interest discovery before 73-th epoch
+Fri 20 Oct 2023 04:03:45 INFO  epoch 73 training [time: 13.63s, train loss: 1985.7910]
+Fri 20 Oct 2023 04:03:47 INFO  epoch 73 evaluating [time: 1.99s, valid_score: 0.092100]
+Fri 20 Oct 2023 04:03:47 INFO  valid result: 
+hit@10 : 0.1435    hit@50 : 0.2526    ndcg@10 : 0.0921    ndcg@50 : 0.1154
+Fri 20 Oct 2023 04:03:47 INFO  Discovering multi-modal user interest before 74-th epoch
+Fri 20 Oct 2023 04:03:47 INFO  Finish multi-modal interest discovery before 74-th epoch
+Fri 20 Oct 2023 04:04:01 INFO  epoch 74 training [time: 13.43s, train loss: 1985.8928]
+Fri 20 Oct 2023 04:04:03 INFO  epoch 74 evaluating [time: 1.98s, valid_score: 0.092600]
+Fri 20 Oct 2023 04:04:03 INFO  valid result: 
+hit@10 : 0.145    hit@50 : 0.2534    ndcg@10 : 0.0926    ndcg@50 : 0.1157
+Fri 20 Oct 2023 04:04:03 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:04:03 INFO  Discovering multi-modal user interest before 75-th epoch
+Fri 20 Oct 2023 04:04:03 INFO  Finish multi-modal interest discovery before 75-th epoch
+Fri 20 Oct 2023 04:04:17 INFO  epoch 75 training [time: 13.47s, train loss: 1984.1995]
+Fri 20 Oct 2023 04:04:19 INFO  epoch 75 evaluating [time: 1.99s, valid_score: 0.092100]
+Fri 20 Oct 2023 04:04:19 INFO  valid result: 
+hit@10 : 0.1436    hit@50 : 0.2537    ndcg@10 : 0.0921    ndcg@50 : 0.1156
+Fri 20 Oct 2023 04:04:19 INFO  Discovering multi-modal user interest before 76-th epoch
+Fri 20 Oct 2023 04:04:19 INFO  Finish multi-modal interest discovery before 76-th epoch
+Fri 20 Oct 2023 04:04:32 INFO  epoch 76 training [time: 13.42s, train loss: 1984.0960]
+Fri 20 Oct 2023 04:04:34 INFO  epoch 76 evaluating [time: 2.02s, valid_score: 0.092600]
+Fri 20 Oct 2023 04:04:34 INFO  valid result: 
+hit@10 : 0.1441    hit@50 : 0.2523    ndcg@10 : 0.0926    ndcg@50 : 0.1157
+Fri 20 Oct 2023 04:04:34 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:04:34 INFO  Discovering multi-modal user interest before 77-th epoch
+Fri 20 Oct 2023 04:04:34 INFO  Finish multi-modal interest discovery before 77-th epoch
+Fri 20 Oct 2023 04:04:48 INFO  epoch 77 training [time: 13.43s, train loss: 1984.4636]
+Fri 20 Oct 2023 04:04:50 INFO  epoch 77 evaluating [time: 2.22s, valid_score: 0.092700]
+Fri 20 Oct 2023 04:04:50 INFO  valid result: 
+hit@10 : 0.1443    hit@50 : 0.2535    ndcg@10 : 0.0927    ndcg@50 : 0.116
+Fri 20 Oct 2023 04:04:50 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:04:50 INFO  Discovering multi-modal user interest before 78-th epoch
+Fri 20 Oct 2023 04:04:50 INFO  Finish multi-modal interest discovery before 78-th epoch
+Fri 20 Oct 2023 04:05:04 INFO  epoch 78 training [time: 13.38s, train loss: 1983.5350]
+Fri 20 Oct 2023 04:05:06 INFO  epoch 78 evaluating [time: 1.98s, valid_score: 0.093100]
+Fri 20 Oct 2023 04:05:06 INFO  valid result: 
+hit@10 : 0.145    hit@50 : 0.2542    ndcg@10 : 0.0931    ndcg@50 : 0.1164
+Fri 20 Oct 2023 04:05:06 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:05:06 INFO  Discovering multi-modal user interest before 79-th epoch
+Fri 20 Oct 2023 04:05:06 INFO  Finish multi-modal interest discovery before 79-th epoch
+Fri 20 Oct 2023 04:05:20 INFO  epoch 79 training [time: 13.67s, train loss: 1984.0149]
+Fri 20 Oct 2023 04:05:22 INFO  epoch 79 evaluating [time: 1.99s, valid_score: 0.092400]
+Fri 20 Oct 2023 04:05:22 INFO  valid result: 
+hit@10 : 0.1444    hit@50 : 0.2531    ndcg@10 : 0.0924    ndcg@50 : 0.1156
+Fri 20 Oct 2023 04:05:22 INFO  Discovering multi-modal user interest before 80-th epoch
+Fri 20 Oct 2023 04:05:22 INFO  Finish multi-modal interest discovery before 80-th epoch
+Fri 20 Oct 2023 04:05:35 INFO  epoch 80 training [time: 13.36s, train loss: 1982.6006]
+Fri 20 Oct 2023 04:05:37 INFO  epoch 80 evaluating [time: 1.99s, valid_score: 0.092500]
+Fri 20 Oct 2023 04:05:37 INFO  valid result: 
+hit@10 : 0.1439    hit@50 : 0.2551    ndcg@10 : 0.0925    ndcg@50 : 0.1162
+Fri 20 Oct 2023 04:05:37 INFO  Discovering multi-modal user interest before 81-th epoch
+Fri 20 Oct 2023 04:05:37 INFO  Finish multi-modal interest discovery before 81-th epoch
+Fri 20 Oct 2023 04:05:50 INFO  epoch 81 training [time: 13.41s, train loss: 1982.0989]
+Fri 20 Oct 2023 04:05:52 INFO  epoch 81 evaluating [time: 1.98s, valid_score: 0.092400]
+Fri 20 Oct 2023 04:05:52 INFO  valid result: 
+hit@10 : 0.144    hit@50 : 0.2542    ndcg@10 : 0.0924    ndcg@50 : 0.1158
+Fri 20 Oct 2023 04:05:52 INFO  Discovering multi-modal user interest before 82-th epoch
+Fri 20 Oct 2023 04:05:52 INFO  Finish multi-modal interest discovery before 82-th epoch
+Fri 20 Oct 2023 04:06:06 INFO  epoch 82 training [time: 13.63s, train loss: 1982.0411]
+Fri 20 Oct 2023 04:06:08 INFO  epoch 82 evaluating [time: 2.03s, valid_score: 0.093200]
+Fri 20 Oct 2023 04:06:08 INFO  valid result: 
+hit@10 : 0.1454    hit@50 : 0.2544    ndcg@10 : 0.0932    ndcg@50 : 0.1164
+Fri 20 Oct 2023 04:06:08 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:06:08 INFO  Discovering multi-modal user interest before 83-th epoch
+Fri 20 Oct 2023 04:06:08 INFO  Finish multi-modal interest discovery before 83-th epoch
+Fri 20 Oct 2023 04:06:22 INFO  epoch 83 training [time: 13.47s, train loss: 1981.2909]
+Fri 20 Oct 2023 04:06:24 INFO  epoch 83 evaluating [time: 2.04s, valid_score: 0.093300]
+Fri 20 Oct 2023 04:06:24 INFO  valid result: 
+hit@10 : 0.145    hit@50 : 0.2539    ndcg@10 : 0.0933    ndcg@50 : 0.1165
+Fri 20 Oct 2023 04:06:24 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:06:24 INFO  Discovering multi-modal user interest before 84-th epoch
+Fri 20 Oct 2023 04:06:24 INFO  Finish multi-modal interest discovery before 84-th epoch
+Fri 20 Oct 2023 04:06:38 INFO  epoch 84 training [time: 13.66s, train loss: 1981.2983]
+Fri 20 Oct 2023 04:06:40 INFO  epoch 84 evaluating [time: 2.01s, valid_score: 0.092100]
+Fri 20 Oct 2023 04:06:40 INFO  valid result: 
+hit@10 : 0.1443    hit@50 : 0.2535    ndcg@10 : 0.0921    ndcg@50 : 0.1153
+Fri 20 Oct 2023 04:06:40 INFO  Discovering multi-modal user interest before 85-th epoch
+Fri 20 Oct 2023 04:06:40 INFO  Finish multi-modal interest discovery before 85-th epoch
+Fri 20 Oct 2023 04:06:53 INFO  epoch 85 training [time: 13.36s, train loss: 1981.4915]
+Fri 20 Oct 2023 04:06:55 INFO  epoch 85 evaluating [time: 2.08s, valid_score: 0.092500]
+Fri 20 Oct 2023 04:06:55 INFO  valid result: 
+hit@10 : 0.1445    hit@50 : 0.2539    ndcg@10 : 0.0925    ndcg@50 : 0.1158
+Fri 20 Oct 2023 04:06:55 INFO  Discovering multi-modal user interest before 86-th epoch
+Fri 20 Oct 2023 04:06:55 INFO  Finish multi-modal interest discovery before 86-th epoch
+Fri 20 Oct 2023 04:07:09 INFO  epoch 86 training [time: 13.46s, train loss: 1980.5543]
+Fri 20 Oct 2023 04:07:11 INFO  epoch 86 evaluating [time: 2.33s, valid_score: 0.092200]
+Fri 20 Oct 2023 04:07:11 INFO  valid result: 
+hit@10 : 0.1447    hit@50 : 0.254    ndcg@10 : 0.0922    ndcg@50 : 0.1154
+Fri 20 Oct 2023 04:07:11 INFO  Discovering multi-modal user interest before 87-th epoch
+Fri 20 Oct 2023 04:07:11 INFO  Finish multi-modal interest discovery before 87-th epoch
+Fri 20 Oct 2023 04:07:25 INFO  epoch 87 training [time: 13.46s, train loss: 1980.5507]
+Fri 20 Oct 2023 04:07:27 INFO  epoch 87 evaluating [time: 2.10s, valid_score: 0.093300]
+Fri 20 Oct 2023 04:07:27 INFO  valid result: 
+hit@10 : 0.1443    hit@50 : 0.2557    ndcg@10 : 0.0933    ndcg@50 : 0.1171
+Fri 20 Oct 2023 04:07:27 INFO  Saving current: saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:07:27 INFO  Discovering multi-modal user interest before 88-th epoch
+Fri 20 Oct 2023 04:07:27 INFO  Finish multi-modal interest discovery before 88-th epoch
+Fri 20 Oct 2023 04:07:40 INFO  epoch 88 training [time: 13.43s, train loss: 1979.5049]
+Fri 20 Oct 2023 04:07:43 INFO  epoch 88 evaluating [time: 2.05s, valid_score: 0.092600]
+Fri 20 Oct 2023 04:07:43 INFO  valid result: 
+hit@10 : 0.1442    hit@50 : 0.255    ndcg@10 : 0.0926    ndcg@50 : 0.1162
+Fri 20 Oct 2023 04:07:43 INFO  Discovering multi-modal user interest before 89-th epoch
+Fri 20 Oct 2023 04:07:43 INFO  Finish multi-modal interest discovery before 89-th epoch
+Fri 20 Oct 2023 04:07:56 INFO  epoch 89 training [time: 13.44s, train loss: 1979.3718]
+Fri 20 Oct 2023 04:07:58 INFO  epoch 89 evaluating [time: 1.98s, valid_score: 0.093000]
+Fri 20 Oct 2023 04:07:58 INFO  valid result: 
+hit@10 : 0.1455    hit@50 : 0.2548    ndcg@10 : 0.093    ndcg@50 : 0.1163
+Fri 20 Oct 2023 04:07:58 INFO  Discovering multi-modal user interest before 90-th epoch
+Fri 20 Oct 2023 04:07:58 INFO  Finish multi-modal interest discovery before 90-th epoch
+Fri 20 Oct 2023 04:08:11 INFO  epoch 90 training [time: 13.33s, train loss: 1979.3983]
+Fri 20 Oct 2023 04:08:13 INFO  epoch 90 evaluating [time: 1.98s, valid_score: 0.092400]
+Fri 20 Oct 2023 04:08:13 INFO  valid result: 
+hit@10 : 0.1449    hit@50 : 0.2547    ndcg@10 : 0.0924    ndcg@50 : 0.1159
+Fri 20 Oct 2023 04:08:13 INFO  Discovering multi-modal user interest before 91-th epoch
+Fri 20 Oct 2023 04:08:13 INFO  Finish multi-modal interest discovery before 91-th epoch
+Fri 20 Oct 2023 04:08:27 INFO  epoch 91 training [time: 13.58s, train loss: 1978.7917]
+Fri 20 Oct 2023 04:08:29 INFO  epoch 91 evaluating [time: 1.96s, valid_score: 0.092700]
+Fri 20 Oct 2023 04:08:29 INFO  valid result: 
+hit@10 : 0.1448    hit@50 : 0.254    ndcg@10 : 0.0927    ndcg@50 : 0.116
+Fri 20 Oct 2023 04:08:29 INFO  Discovering multi-modal user interest before 92-th epoch
+Fri 20 Oct 2023 04:08:29 INFO  Finish multi-modal interest discovery before 92-th epoch
+Fri 20 Oct 2023 04:08:42 INFO  epoch 92 training [time: 13.40s, train loss: 1978.1451]
+Fri 20 Oct 2023 04:08:44 INFO  epoch 92 evaluating [time: 2.07s, valid_score: 0.092800]
+Fri 20 Oct 2023 04:08:44 INFO  valid result: 
+hit@10 : 0.1455    hit@50 : 0.2548    ndcg@10 : 0.0928    ndcg@50 : 0.1162
+Fri 20 Oct 2023 04:08:44 INFO  Discovering multi-modal user interest before 93-th epoch
+Fri 20 Oct 2023 04:08:44 INFO  Finish multi-modal interest discovery before 93-th epoch
+Fri 20 Oct 2023 04:08:58 INFO  epoch 93 training [time: 13.38s, train loss: 1978.1986]
+Fri 20 Oct 2023 04:09:00 INFO  epoch 93 evaluating [time: 1.95s, valid_score: 0.092800]
+Fri 20 Oct 2023 04:09:00 INFO  valid result: 
+hit@10 : 0.144    hit@50 : 0.2543    ndcg@10 : 0.0928    ndcg@50 : 0.1163
+Fri 20 Oct 2023 04:09:00 INFO  Discovering multi-modal user interest before 94-th epoch
+Fri 20 Oct 2023 04:09:00 INFO  Finish multi-modal interest discovery before 94-th epoch
+Fri 20 Oct 2023 04:09:13 INFO  epoch 94 training [time: 13.36s, train loss: 1978.4193]
+Fri 20 Oct 2023 04:09:15 INFO  epoch 94 evaluating [time: 1.97s, valid_score: 0.093100]
+Fri 20 Oct 2023 04:09:15 INFO  valid result: 
+hit@10 : 0.1451    hit@50 : 0.2543    ndcg@10 : 0.0931    ndcg@50 : 0.1164
+Fri 20 Oct 2023 04:09:15 INFO  Discovering multi-modal user interest before 95-th epoch
+Fri 20 Oct 2023 04:09:15 INFO  Finish multi-modal interest discovery before 95-th epoch
+Fri 20 Oct 2023 04:09:28 INFO  epoch 95 training [time: 13.41s, train loss: 1977.8253]
+Fri 20 Oct 2023 04:09:30 INFO  epoch 95 evaluating [time: 2.16s, valid_score: 0.092100]
+Fri 20 Oct 2023 04:09:30 INFO  valid result: 
+hit@10 : 0.143    hit@50 : 0.2545    ndcg@10 : 0.0921    ndcg@50 : 0.1159
+Fri 20 Oct 2023 04:09:30 INFO  Discovering multi-modal user interest before 96-th epoch
+Fri 20 Oct 2023 04:09:31 INFO  Finish multi-modal interest discovery before 96-th epoch
+Fri 20 Oct 2023 04:09:44 INFO  epoch 96 training [time: 13.42s, train loss: 1977.6382]
+Fri 20 Oct 2023 04:09:46 INFO  epoch 96 evaluating [time: 2.11s, valid_score: 0.092700]
+Fri 20 Oct 2023 04:09:46 INFO  valid result: 
+hit@10 : 0.1452    hit@50 : 0.2548    ndcg@10 : 0.0927    ndcg@50 : 0.1161
+Fri 20 Oct 2023 04:09:46 INFO  Discovering multi-modal user interest before 97-th epoch
+Fri 20 Oct 2023 04:09:46 INFO  Finish multi-modal interest discovery before 97-th epoch
+Fri 20 Oct 2023 04:09:59 INFO  epoch 97 training [time: 13.29s, train loss: 1976.9014]
+Fri 20 Oct 2023 04:10:01 INFO  epoch 97 evaluating [time: 2.01s, valid_score: 0.093000]
+Fri 20 Oct 2023 04:10:01 INFO  valid result: 
+hit@10 : 0.1445    hit@50 : 0.2546    ndcg@10 : 0.093    ndcg@50 : 0.1165
+Fri 20 Oct 2023 04:10:01 INFO  Discovering multi-modal user interest before 98-th epoch
+Fri 20 Oct 2023 04:10:01 INFO  Finish multi-modal interest discovery before 98-th epoch
+Fri 20 Oct 2023 04:10:15 INFO  epoch 98 training [time: 13.39s, train loss: 1976.6060]
+Fri 20 Oct 2023 04:10:17 INFO  epoch 98 evaluating [time: 2.23s, valid_score: 0.092400]
+Fri 20 Oct 2023 04:10:17 INFO  valid result: 
+hit@10 : 0.1444    hit@50 : 0.2538    ndcg@10 : 0.0924    ndcg@50 : 0.1158
+Fri 20 Oct 2023 04:10:17 INFO  Finished training, best eval result in epoch 87
+Fri 20 Oct 2023 04:10:17 INFO  Loading model structure and parameters from saved/MISSRec-Oct-20-2023_03-44-06.pth
+Fri 20 Oct 2023 04:10:19 INFO  best valid : OrderedDict([('hit@10', 0.1443), ('hit@50', 0.2557), ('ndcg@10', 0.0933), ('ndcg@50', 0.1171)])
+Fri 20 Oct 2023 04:10:19 INFO  test result: OrderedDict([('hit@10', 0.1201), ('hit@50', 0.2218), ('ndcg@10', 0.0771), ('ndcg@50', 0.0988)])
+Fri 20 Oct 2023 04:10:19 INFO  Write log to /data/wangjinpeng/MISSRec_clear/log/MISSRec_gpu2/Oct-20-2023_03-43-56_.log
