@@ -8,7 +8,7 @@
 
 This repository provides the code for our paper at **ACM MM 2023**:
 
-**MISSRec: Pre-training and Transferring Multi-modal Interest-aware Sequence Representation for Recommendation**. Jinpeng Wang, Ziyun Zeng, Yunxiao Wang, Yuting Wang, Xingyu Lu, Tianxiang Li, Jun Yuan, Rui Zhang, Hai-Tao Zheng, Shu-Tao Xia. 📝[[Paper](https://arxiv.org/abs/2308.11175)]. 🖼️[[Poster](misc/poster.pdf)]. 📺[[2-min Video](misc/teaser_video.mp4)]. 🇨🇳[[中文解读](TBD)].
+**MISSRec: Pre-training and Transferring Multi-modal Interest-aware Sequence Representation for Recommendation**. Jinpeng Wang, Ziyun Zeng, Yunxiao Wang, Yuting Wang, Xingyu Lu, Tianxiang Li, Jun Yuan, Rui Zhang, Hai-Tao Zheng, Shu-Tao Xia. 📝[[Paper](https://arxiv.org/abs/2308.11175)]. 🖼️[[Poster](misc/poster.pdf)]. 📺[[2-min Video](misc/teaser_video.mp4)]. 🇨🇳[[中文解读 (PaperWeekly)](https://mp.weixin.qq.com/s/yGc4anDHgbE2xFkPyg_pAA)].
 
 We propose ***MISSRec***, a multi-modal pre-training and transfer learning framework for sequential recommendation. On the user side, we first design a clustering-based interest discovery algorithm to mine users' interests from their multi-modal behaviors. Then, we build a Transformer-based encoder-decoder model, where the encoder learns to capture personalization cues from interest tokens while the decoder is developed to grasp item-modality-interest relations for better sequence representation. On the candidate item side, we adopt a dynamic fusion module to produce user-adaptive item representation. We pre-train the model with contrastive learning objectives and fine-tune it in an efficient manner. Experiments demonstrate the effectiveness and flexibility of MISSRec, indicating a practical solution for real-world recommendation scenarios. 
 
@@ -36,7 +36,7 @@ Before running the code, we need to make sure that everything needed is ready. T
 
 <details><summary>MM23-MISSRec/</summary>
 <ul>
-    <li>fig/</li>
+    <li>misc/</li>
     <li>data/</li>
     <li>reference_log/</li>
     <li>props/</li>
@@ -81,8 +81,8 @@ Before running the code, we need to make sure that everything needed is ready. T
     </ul>
     <li>scripts/</li>
     <ul>
-    	<li>run0001.sh</li>
-    	<li>run0002.sh</li>
+    	<li>run01.sh</li>
+    	<li>run02.sh</li>
     	<li>...</li>
     </ul>
     <li>cluster_utils.py</li>
