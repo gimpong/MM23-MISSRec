@@ -1,10 +1,10 @@
-log/
-log_tensorboard/
-saved/
-pretrained_models
-tmp_print.py
-trash/
-dataset
+/log/
+/log_tensorboard/
+/saved/
+/pretrained_models
+/tmp_print.py
+/trash/
+/dataset
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
