@@ -133,6 +133,7 @@ class MISSRec(Transformer):
     def seq_item_contrastive_task(self, seq_output, interaction, batch_labels):
         if 'text' in self.modal_type:
             pos_text_emb = self.text_adaptor(interaction['pos_text_emb'])
+        if 'img' in self.modal_type:
             pos_img_emb = self.img_adaptor(interaction['pos_img_emb'])
         if 'text' in self.modal_type and 'img' in self.modal_type: # weighted fusion
             logits = self._compute_dynamic_fused_logits(seq_output, pos_text_emb, pos_img_emb) / self.temperature
