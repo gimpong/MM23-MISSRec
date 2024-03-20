@@ -63,7 +63,7 @@ def finetune(rank, world_size, dataset, pretrained_file, mode='transductive',
             logger.info(f'Fix encoder parameters.')
             for _ in model.position_embedding.parameters():
                 _.requires_grad = False
-            for _ in model.trm_encoder.parameters():
+            for _ in model.trm_model.encoder.parameters():
                 _.requires_grad = False
         if fix_plm:
             logger.info('Fix pre-trained language model.')
